@@ -1,0 +1,17 @@
+@startuml sequence
+actor User
+participant "React Frontend" as Frontend
+participant "Spring Boot Backend" as Backend
+User -> Frontend: Input Setting
+Frontend -> Backend: POST /api/roulette
+Backend -> Backend: Save to session
+Backend -> Frontend: OK
+Frontend -> User: Show roulette screen
+User -> Frontend: Click "Spin"
+Frontend -> Backend: GET /api/roulette/spin
+Backend -> Backend: Generate random result
+Backend -> Frontend: Return result
+Frontend -> User: Show animation and result
+User -> Frontend: Click "Return to Settings"
+Frontend -> User: Show settings screen
+@enduml 

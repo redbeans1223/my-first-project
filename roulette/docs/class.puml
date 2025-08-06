@@ -1,0 +1,23 @@
+@startuml class
+class Roulette {
+    -String type
+    -String[] segments
+    -int start
+    -int end
+    +getType()
+    +getSegments()
+    +getStart()
+    +getEnd()
+
+}
+class RouletteController {
+    +createRoulette(RouletteRequest): String
+    +spin(): RouletteResult
+}
+class RouletteRequest {
+    -String result
+    -getResult()
+}
+RouletteController --> Roulette
+RouletteController --> RouletteResult
+@enduml

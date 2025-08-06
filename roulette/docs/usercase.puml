@@ -1,0 +1,7 @@
+@startuml usercase
+actor User
+User --> (Input Roulette Setting)
+User --> (Spin Roulette)
+User --> (View Result)
+User --> (Return to Setting)
+@enduml

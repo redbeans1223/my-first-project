@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SetupScreen from './SetupScreen';
 import RouletteScreen from './RouletteScreen';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 
 

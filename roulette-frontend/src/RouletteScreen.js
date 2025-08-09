@@ -20,6 +20,9 @@ const RouletteScreen = () => {
   const colors = useMemo(() => {
     return segments.map((_, i) => `hsl(${(i * 360) / segments.length}, 70%, 60%)`);
   }, [segments]);
+  // ルーレットの数字
+  const rouletteNumbers = Array.from({ length: 37}, (_, i) => i);
+  const redNumbers = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
 
   const handleSpin = useCallback(async () => {
     setResult('');
@@ -76,6 +79,7 @@ const RouletteScreen = () => {
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
+        ctx.font = 'boled 16px Arial';
         ctx.fillText(seg, 60, 0);
         ctx.restore();
         startAngle += arc;
@@ -93,6 +97,7 @@ const RouletteScreen = () => {
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
+        ctx.font = 'bold 20px Arial';
         ctx.fillText(`結果: ${result}`, 100, 100);
       } else if (speed > 0.005) {
         animationFrame = requestAnimationFrame(spin);
@@ -107,9 +112,36 @@ const RouletteScreen = () => {
     <div className="p-4 max-w-md mx-auto bg-gray-100 rounded-lg shadow-md animate-fade-in">
       <h1 className="text-2xl font-bold text-center">ルーレット</h1>
       <canvas ref={canvasRef} width="200" height="200" className="mx-auto" aria-hidden="true" />
-      <p className={clsx('text-center', result ? 'animate-bounce' : '')} role="status">
+      {/* ベッティングテーブル */}
+      <div className='roulette-table mt-4'>
+        {/* 数字エリア（0-36） */}
+        <div className='number-grid'>
+            <div className='number zero'>0</div>
+            {rouletteNumbers.slice(1).map((num) => (
+                <div
+                    key={num}
+                    className={clsx('number', redNumbers.includes(num) ? 'red' : 'black')}
+                >
+                    {num}
+                </div>
+            ))}
+        </div>
+      {/* 外部ベッドエリア */}
+      <div className='outside-bets'>
+        <div className='bet option'>Red</div>
+        <div className='bet option'>Black</div>
+        <div className='bet option'>Even</div>
+        <div className='bet option'>Odd</div>
+        <div className='bet option'>1-18</div>
+        <div className='bet option'>19-36</div> 
+        <div className='bet option'>1st 12</div>
+        <div className='bet option'>2nd 12</div>
+        <div className='bet option'>3rd 12</div>
+      </div>
+    </div>
+    <p className={clsx('text-center', result ? 'animate-bounce' : '')} role="status">
         結果: {result || 'スピン中...'}
-      </p>
+    </p>
       <button
         onClick={handleSpin}
         className="bg-blue-500 text-white p-2 rounded-lg mx-auto block transition duration-300 ease-in-out hover:bg-blue-600 hover:scale-105 active:scale-95"
